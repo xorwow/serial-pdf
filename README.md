@@ -1,6 +1,6 @@
 # serial-pdf
 
-*Create PDF series from LaTeX templates*
+*Create dynamic PDF batches from LaTeX templates*
 
 ## Introduction
 
