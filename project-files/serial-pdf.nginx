@@ -1,0 +1,42 @@
+## Example nginx site for serial-pdf
+
+server {
+  listen 80;
+  listen [::]:80;
+  server_name <SERVER-URL>;
+
+  location / {
+    return 301 https://$host$request_uri;
+  }
+
+  # LetsEncrypt support
+  #location /.well-known/acme-challenge/ {
+  #  root /var/www/letsencrypt;
+  #}
+}
+
+server {
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
+  server_name <SERVER-URL>;
+  
+  access_log /var/log/nginx/serialpdf_access.log;
+  error_log /var/log/nginx/serialpdf_error.log
+
+  # Authentication support
+  #auth_basic "Authentication required";
+  #auth_basic_user_file <PATH-TO-HTPASSWD>;
+
+  ssl_certificate <PATH-TO-FULLCHAIN-PEM>;
+  ssl_certificate_key <PATH-TO-PRIVKEY-PEM>;
+
+  location / {
+    uwsgi_pass 127.0.0.1:5001;
+    include uwsgi_params;
+  }
+
+  # LetsEncrypt support
+  #location /.well-known/acme-challenge/ {
+  #  root /var/www/letsencrypt;
+  #}
+}

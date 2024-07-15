@@ -1,0 +1,38 @@
+%% Support package for rendering & processing placeholders in LaTeX templates
+
+\ProvidesPackage{serial-pdf}
+
+%% Placeholders
+
+% These command calls will be replaced during rendering
+
+% Standard text placeholder, with the placeholder key as argument
+% Example: \placeholder{FirstName}
+\providecommand\placeholder[1]{\textcolor{red}{\textbf{#1}}}
+
+% List placeholder, with the list key as argument
+% Will be replaced by \begin[<list length>]{placeholders} \lfitem[<index>]{<entry>} ... \end{placeholders}
+\providecommand\placeholderlist[1]{\placeholder{[#1]}}
+
+% Placeholder list format helpers
+% You can redefine these commands to change the formatting
+
+% Defines the begin block of a placeholder list
+% Takes the number of entries in the list as an optional argument (default 0)
+\providecommand{\lfbegin}[1][0]{
+    \begin{samepage}
+    \begin{itemize}
+}
+% Defines how a single list item should be formatted
+% First arg is the current index starting at 1 (default 0), second arg is the value
+\providecommand{\lfitem}[2][0]{
+    \item[--]{#2}
+}
+% Defines the end block of a placeholder list
+\providecommand\lfend{
+    \end{itemize}
+    \end{samepage}
+}
+% Open this environment to add list items
+% Takes the number of entries in the list as an optional argument (default 0)
+\newenvironment{placeholders}[1][]{\lfbegin[#1]}{\lfend}
