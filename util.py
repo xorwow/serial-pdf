@@ -126,3 +126,17 @@ def git_checkout(target_dir: str, repo_path: str, subpath: str = '.', commit: st
         head = os.path.join(workdir, os.path.dirname(subpath) if os.path.isfile(subpath) else subpath)
         for child in os.listdir(head):
             move_path(os.path.join(head, child), os.path.join(target_dir, child))
+
+def git_file_exists(repo_path: str, subpath: str, commit: str = 'HEAD') -> bool:
+    """
+    Checks if a file or directory existed at a certain commit.
+
+    Arguments:
+    - `repo_path`: Root path of the repository to check in.
+    - `subpath`: Must be a path within the repository. File or directory to check.
+    - `commit`: Repository version to check out, instead of using HEAD.
+    """
+    git_command = [ 'git', 'cat-file', '-e', f"{ shell_escape(commit) }:{ subpath }" ]
+    with git_index_lock:
+        proc_result = proc_run(git_command, cwd=repo_path, stdout=PIPE, stderr=PIPE)
+    return proc_result.returncode == 0
