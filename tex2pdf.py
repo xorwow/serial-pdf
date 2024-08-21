@@ -49,19 +49,19 @@ class TexTemplate():
         """
         Checks if the template's root folder currently exists.
         """
-        if not os.path.isdir(self.template_folder) or not os.access(self.template_folder, os.R_OK):
-            log.error(f"Could not find/read template folder for ID '{ self.template_id }' at '{ self.template_folder }'")
-            return False
-        return True
+        exists: bool = util.git_file_exists(config.template_root, os.path.relpath(self.template_folder, config.template_root), self.commit)
+        if not exists:
+            log.error(f"Could not find template folder for ID '{ self.template_id }' at '{ self.template_folder }' (@{ self.commit })")
+        return exists
     
     def entry_exists(self) -> bool:
         """
         Checks if the template's entry file currently exists.
         """
-        if not os.path.isfile(self.entry_file) or not os.access(self.entry_file, os.R_OK):
-            log.error(f"Could not find/read main template file for ID '{ self.template_id }' at '{ self.entry_file }'")
-            return False
-        return True
+        exists: bool = util.git_file_exists(config.template_root, os.path.relpath(self.template_folder, config.template_root), self.commit)
+        if not exists:
+            log.error(f"Could not find template folder for ID '{ self.template_id }' at '{ self.template_folder }' (@{ self.commit })")
+        return exists
     
     def _render_file(self, path: str | os.PathLike, data: dict[str, str | list[str]], check_unmatched=True) -> tuple[str, list[str]]:
         """
@@ -185,7 +185,7 @@ class PDFResult():
         warnings = ' with warnings' if self.unmatched_placeholders else ''
         return f"PDFResult({ self.id } @ { self.pdf_path } ({ self.commit }){ warnings }))"
 
-    def export(self) -> dict[str, str | list[str]]:
+    def export(self) -> dict[str, str | list[str] | float]:
         """
         Exports the compiled PDF from the staging directory to the export directory.
         
