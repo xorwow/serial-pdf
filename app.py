@@ -66,6 +66,8 @@ def job():
     """
     # Get the status of a job
     if request.method == 'GET':
+        log.debug(f"Received GET: { request.args }")
+        
         # Validate id parameter
         if (job_id := request.args.get('id', None, type=str)) is None or not job_id.isalnum():
             abort(400, 'Missing or bad parameter: id (alphanum)')
@@ -105,6 +107,8 @@ def job():
 
     # Create a new job, return ID
     elif request.method == 'POST':
+        log.debug(f"Received POST: { request.args }")
+        
         # Validate template_id parameter
         if (template_id := request.args.get('template_id', None, type=str)) is None:
             abort(400, 'Missing parameter: template_id')
