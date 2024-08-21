@@ -81,7 +81,7 @@ class SerialPDF():
     def queue_job(self, template: TexTemplate, data: dict[str | list[str]]) -> str:
         """
         Queues a new PDFJob in the worker pool after building it from the given template and render data.
-        A mapping of `id` to a worker pool Future object will be tracked in queued_jobs.
+        The job's ID is stored in queued_jobs.
         """
         job = PDFJob(template, data)
         log.debug(f"Queueing job { job }")
