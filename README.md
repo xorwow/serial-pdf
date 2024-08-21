@@ -72,7 +72,7 @@ curl 'http://localhost:5000/job/?id=<id from above>'
 
 Create a folder for your LaTeX templates. It should contain all of your PDF templates. You can choose how to organize them, as the `config.py` provides a way of changing how templates are found within the template root.
 
-You template folder must be a git repository (root), as serial-pdf uses this to pull certain versions (commits) of templates so PDFs can be restored at a later point and live changes to the template folder do not mess up jobs which are already queued.
+Your template folder must be a git repository (root), as serial-pdf uses this to pull certain versions (commits) of templates so PDFs can be restored at a later point and live changes to the template folder do not mess up jobs which are already queued.
 
 Create a second directory that finished PDFs can be exported into.
 
@@ -264,7 +264,7 @@ flask listens to unauthenticated HTTP.
 
 #### serial_pdf.py
 
-Holds the class `SerialPDF`, which creates a worker pool and exposes methods for queuing and running jobs. It also holds the variables `queued_jobs`, `finished_jobs` and `failed jobs`, which track job statuses. Note that directly writing to `queued_jobs` does not queue a job. Any failed job will be tracked in `failed_jobs`, and depending on the failure type a `<job ID>.log` compilation log will be copied to the error log directory specified in the config.
+Holds the class `SerialPDF`, which creates a worker pool and exposes methods for queuing and running jobs. It also holds the variables `queued_jobs`, `finished_jobs` and `failed_jobs`, which track job statuses. Note that directly writing to `queued_jobs` does not queue a job. Any failed job will be tracked in `failed_jobs`, and depending on the failure type a `<job ID>.log` compilation log will be copied to the error log directory specified in the config.
 
 `SerialPDF` can be instructed to use a `multiprocessing.Manager` to make the job variables available to all calling threads. When disabled, each calling HTTP worker sharing a `SerialPDF` object will hold a local version of these variables.
 
