@@ -295,3 +295,5 @@ The method `setup_logging` configures the `serial-pdf` logger to write INFO+ to 
 `current_head` returns the short commit hash of the current HEAD ref of a git repository.
 
 `git_checkout` checks out a subdirectory or file of a certain commit version within a git repository to the supplied target directory. The given target may already exist, but not include any colliding filenames. If a file is checked out, it will be placed into the target directory. If a directory is checked out, its contents will be placed into the target.
+
+`git_file_exists` checks if a file or directory exists in a specified commit.
