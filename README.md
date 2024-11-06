@@ -70,7 +70,7 @@ curl 'http://localhost:5000/job/?id=<id from above>'
 
 ### Folders
 
-Create a folder for your LaTeX templates. It should contain all of your PDF templates. You can choose how to organize them, as the `config.py` provides a way of changing how templates are found within the template root.
+Create a folder for your LaTeX templates. It should contain all of your PDF templates. You can choose how to organize them, as the `config.py` provides a way of changing how templates are found within the template root. By default, a subfolder containing at least a `main.tex` is expected for each template.
 
 Your template folder must be a git repository (root), as serial-pdf uses this to pull certain versions (commits) of templates so PDFs can be restored at a later point and live changes to the template folder do not mess up jobs which are already queued.
 
