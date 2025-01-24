@@ -45,6 +45,7 @@ cd templates/my_template
 edit main.tex
 
 # Commit your changes (required)
+cd ..
 git init
 git commit -am 'first template'
 
